@@ -45,6 +45,7 @@ export default function Application(props) {
       )
       .then(response => {
         setState({...state, appointments});
+        return response.config.data
       })
     );
   };
@@ -71,6 +72,11 @@ export default function Application(props) {
     );
   }
 
+  const editInterview = function (id) {
+    const information = state.appointments[id].interview;
+    return information
+  }
+
   const appointment = getAppointmentsForDay(state, state.day);
   const ScheduleList = appointment.map(appointment => {
     const interview=getInterview(state, appointment.interview);
@@ -82,6 +88,7 @@ export default function Application(props) {
       interviewers={Object.values(state.interviewers)}
       bookInterview={bookInterview}
       cancelInterview={cancelInterview}
+      editInterview={editInterview}
       />
   });
 
