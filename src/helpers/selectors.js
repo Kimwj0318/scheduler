@@ -1,27 +1,26 @@
 const getAppointmentsForDay = function(state, day) {
-  let returnArray = [];
-  let intermediateArray = [];
+  let matchedAppointments = [];
+  let foundAppointments = [];
   const filteredDays = state.days.filter(eachDay => eachDay.name === day);
 
   for (let filteredDay of filteredDays) {
     let wantedArray = filteredDay.appointments;
-    intermediateArray.push(...wantedArray);
+    foundAppointments.push(...wantedArray);
   }
   
-  for (let element of intermediateArray) {
-    returnArray.push(state.appointments[element]);
+  for (let element of foundAppointments) {
+    matchedAppointments.push(state.appointments[element]);
   }
 
-  return returnArray;
+  return matchedAppointments;
 };
 
 const getInterview = function(state, interview) {
-  let returnObject = {};
-  if(interview) {
-  returnObject["student"] = interview.student;
-  const interviewer = interview.interviewer;
-    returnObject["interviewer"] = state.interviewers[interviewer];
-    return returnObject;
+  if (interview) {
+    return {
+      student: interview.student,
+      interviewer: state.interviewers[interview.interviewer]
+    }
   }
   return null;
 }
