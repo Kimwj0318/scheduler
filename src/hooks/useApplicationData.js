@@ -7,6 +7,7 @@ export default function useApplicationData () {
   const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
   const SET_INTERVIEW = "SET_INTERVIEW";
   const REMOVE_INTERVIEW = "REMOVE_INTERVIEW";
+  const UPDATE_SPOTS = "UPDATE_SPOTS";
 
   const reducer = function (state, action) {
     switch (action.type) {
@@ -15,9 +16,9 @@ export default function useApplicationData () {
       case SET_APPLICATION_DATA:
         return ({...state, days:action.daysData, appointments:action.appointmentsData, interviewers:action.interviewersData})
       case SET_INTERVIEW:
-        return ({...state, appointments:action.value})
-      case REMOVE_INTERVIEW:
-        return ({...state, appointments:action.value})
+          const newAppoint = state["appointments"];
+          newAppoint[action.id]["interview"] = action.interview;
+          return { ...state, appointments: newAppoint };
       default:
         throw new Error(
           `Tried to reduce with unsupported action type: ${action.type}`
@@ -72,7 +73,8 @@ export default function useApplicationData () {
         data
       )
       .then(response => {
-        dispatch( {type: SET_INTERVIEW, value: appointments});
+        dispatch({ type: SET_INTERVIEW, id, interview });
+        // console.log("state after booking interview", state);
       })
     );
   };
@@ -94,12 +96,12 @@ export default function useApplicationData () {
         data
       )
       .then(response => {
-        dispatch( {type: REMOVE_INTERVIEW, value: appointments});
+        dispatch({ type: SET_INTERVIEW, id, interview: null });
+        // console.log("state after removing interview", state);
       })
     );
   };
 
-  console.log(state);
   return {
     state,
     setDay,
