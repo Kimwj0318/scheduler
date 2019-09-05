@@ -25,4 +25,20 @@ const getInterview = function(state, interview) {
   return null;
 }
 
-module.exports = { getAppointmentsForDay, getInterview }
+const getInterviewersByDay = function(state, day) {
+  let matchedInterviewers = [];
+  let foundInterviewers = [];
+  const filteredDays = state.days.filter(eachDay => eachDay.name === day);
+
+  for (let filteredDay of filteredDays) {
+    let wantedArray = filteredDay.interviewers;
+    foundInterviewers.push(...wantedArray);
+  }
+  
+  for (let element of foundInterviewers) {
+    matchedInterviewers.push(state.interviewers[element]);
+  }
+
+  return matchedInterviewers;
+}
+module.exports = { getAppointmentsForDay, getInterview, getInterviewersByDay }
