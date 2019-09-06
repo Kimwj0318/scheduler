@@ -35,7 +35,7 @@ const reducer = function (state, action) {
 }
 
 export default function useApplicationData () {
-  const ws = new WebSocket("ws://localhost:8001");
+ 
   const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
     days: [],
@@ -44,6 +44,14 @@ export default function useApplicationData () {
   });
   
   useEffect(() => {
+    const ws = new WebSocket("ws://localhost:8001");
+
+    ws.onmessage = (event) => {
+      let eventData = JSON.parse(event.data);
+      if (eventData.type === SET_INTERVIEW) {
+        dispatch({type: SET_INTERVIEW, id: eventData.id, interview: eventData.interview});
+      }
+    }
     const daysApi = axios.get("/api/days");
     const appointmentsApi = axios.get("/api/appointments");
     const interviewersApi = axios.get("/api/interviewers");
@@ -59,8 +67,8 @@ export default function useApplicationData () {
           appointmentsData,
           interviewersData
         })
-      })
-  }, []);
+      })    
+  },[]);
 
   const setDay = day => dispatch({type: SET_DAY, value: day })
 
@@ -72,19 +80,6 @@ export default function useApplicationData () {
         url,
         data
       )
-      .then(() => {
-        const msg = {
-          type: SET_INTERVIEW,
-          id,
-          interview
-        }
-        ws.send(JSON.stringify(msg));
-      })
-      .then(() => {
-        ws.onmessage = function(event){
-          dispatch(JSON.parse(event.message));
-        }
-      })
     );
   };
 
@@ -96,19 +91,6 @@ export default function useApplicationData () {
         url,
         data
       )
-      .then(() => {
-        const msg = {
-          type: SET_INTERVIEW,
-          id,
-          interview:null
-        }
-        ws.send(JSON.stringify(msg));
-      })
-      .then(() => {
-        ws.onmessage = function(event){
-          dispatch(JSON.parse(event.message));
-        }
-      })
     );
   };
 
