@@ -1,7 +1,6 @@
 import { useEffect, useReducer } from "react";
 import axios from "axios";
 
-
 const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
@@ -14,18 +13,19 @@ const reducer = function (state, action) {
       return ({...state, days:action.daysData, appointments:action.appointmentsData, interviewers:action.interviewersData})
     case SET_INTERVIEW:
       const newAppoint = state["appointments"];
-      newAppoint[action.id]["interview"] = action.interview;
       const days = state["days"];
       for (let day of days) {
         if(day.appointments.includes(action.id)){
-          if (action.interview) {
+          if (!newAppoint[action.id]["interview"]){
             day.spots -= 1;
-          } else {
-            day.spots += 1;
-          }
-          break;
+          }else {
+            if (!action.interview) {
+              day.spots += 1;
+            }
+          } 
         }
       }
+      newAppoint[action.id]["interview"] = action.interview;
       return { ...state, appointments: newAppoint, days:days };
     default:
       throw new Error(
@@ -35,6 +35,7 @@ const reducer = function (state, action) {
 }
 
 export default function useApplicationData () {
+  const ws = new WebSocket("ws://localhost:8001");
   const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
     days: [],
@@ -59,9 +60,7 @@ export default function useApplicationData () {
           interviewersData
         })
       })
-
   }, []);
-
 
   const setDay = day => dispatch({type: SET_DAY, value: day })
 
@@ -73,8 +72,18 @@ export default function useApplicationData () {
         url,
         data
       )
-      .then(response => {
-        dispatch({ type: SET_INTERVIEW, id, interview });
+      .then(() => {
+        const msg = {
+          type: SET_INTERVIEW,
+          id,
+          interview
+        }
+        ws.send(JSON.stringify(msg));
+      })
+      .then(() => {
+        ws.onmessage = function(event){
+          dispatch(JSON.parse(event.message));
+        }
       })
     );
   };
@@ -87,8 +96,18 @@ export default function useApplicationData () {
         url,
         data
       )
-      .then(response => {
-        dispatch({ type: SET_INTERVIEW, id, interview: null });
+      .then(() => {
+        const msg = {
+          type: SET_INTERVIEW,
+          id,
+          interview:null
+        }
+        ws.send(JSON.stringify(msg));
+      })
+      .then(() => {
+        ws.onmessage = function(event){
+          dispatch(JSON.parse(event.message));
+        }
       })
     );
   };
