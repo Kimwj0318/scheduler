@@ -10,20 +10,24 @@ const reducer = function (state, action) {
       return ({...state, days:action.daysData, appointments:action.appointmentsData, interviewers:action.interviewersData})
     case "SET_INTERVIEW":
       const newAppoint = state["appointments"];
-      const days = state["days"];
-      for (let day of days) {
+      const newDays = state.days.map((day) => {
         if(day.appointments.includes(action.id)){
           if (!newAppoint[action.id]["interview"]){
-            day.spots -= 1;
+            let newSpotAmount = day.spots;
+            newSpotAmount -= 1;
+            return {...day, spots: newSpotAmount}
           }else {
             if (!action.interview) {
-              day.spots += 1;
+              let newSpotAmount = day.spots;
+              newSpotAmount += 1;
+              return {...day, spots: newSpotAmount}
             }
           } 
         }
-      }
+        return {...day}
+      })
       newAppoint[action.id]["interview"] = action.interview;
-      return { ...state, appointments: newAppoint, days:days };
+      return { ...state, appointments: newAppoint, days:newDays };
     default:
       throw new Error(
         `tried to reduce with unsupported action type`

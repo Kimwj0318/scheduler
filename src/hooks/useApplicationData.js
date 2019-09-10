@@ -52,6 +52,9 @@ export default function useApplicationData () {
         url,
         data
       )
+      .then(response => {
+        dispatch({ type: SET_INTERVIEW, id, interview });
+      })
     );
   };
 
@@ -63,6 +66,9 @@ export default function useApplicationData () {
         url,
         data
       )
+      .then(response => {
+        dispatch({ type: SET_INTERVIEW, id, interview: data });
+      })
     );
   };
 
