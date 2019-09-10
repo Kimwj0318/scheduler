@@ -1,9 +1,12 @@
 import { useEffect, useReducer } from "react";
 import axios from "axios";
 import  constants from "reducers/application";
+const SET_DAY = "SET_DAY";
+const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
+const SET_INTERVIEW = "SET_INTERVIEW";
 
 export default function useApplicationData () {
-  const { SET_APPLICATION_DATA, SET_DAY, SET_INTERVIEW, reducer } = constants();
+  const { reducer } = constants();
  
   const [state, dispatch] = useReducer(reducer, {
     day: "Monday",

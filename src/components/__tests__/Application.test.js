@@ -43,6 +43,7 @@ describe("Application", () => {
     );
 
     expect(getByText(day, "no spots remaining")).toBeInTheDocument();
+    
   });
 
   it("loads data, books an interview and reduces the spots remaining for Monday by 1", async () => {
@@ -116,6 +117,9 @@ describe("Application", () => {
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
     
     axios.put.mockRejectedValueOnce();
+
+    await waitForElement(() => queryByText(appointment, "Error"));
+    expect.stringMatching(/Could not save appointment/);
     
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday")
@@ -142,6 +146,9 @@ describe("Application", () => {
     expect(getByText(appointment, "Deleting")).toBeInTheDocument();
     
     axios.put.mockRejectedValueOnce();
+
+    await waitForElement(() => queryByText(appointment, "Error"));
+    expect.stringMatching(/Could not delete appointment/);
     
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday")
