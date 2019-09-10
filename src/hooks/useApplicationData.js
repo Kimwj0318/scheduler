@@ -24,6 +24,7 @@ export default function useApplicationData () {
         dispatch({type: SET_INTERVIEW, id: eventData.id, interview: eventData.interview});
       }
     }
+
     const daysApi = axios.get("/api/days");
     const appointmentsApi = axios.get("/api/appointments");
     const interviewersApi = axios.get("/api/interviewers");
@@ -52,9 +53,10 @@ export default function useApplicationData () {
         url,
         data
       )
-      .then(response => {
-        dispatch({ type: SET_INTERVIEW, id, interview });
-      })
+      // uncomment these lines if you want to run the tests in jest
+      // .then(response => {
+      //   dispatch({ type: SET_INTERVIEW, id, interview });
+      // })
     );
   };
 
@@ -66,9 +68,10 @@ export default function useApplicationData () {
         url,
         data
       )
-      .then(response => {
-        dispatch({ type: SET_INTERVIEW, id, interview: data });
-      })
+      // uncomment these lines if you want to run the tests in jest
+      // .then(response => {
+      //   dispatch({ type: SET_INTERVIEW, id, interview: data });
+      // })
     );
   };
 
