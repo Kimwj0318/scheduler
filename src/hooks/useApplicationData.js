@@ -53,7 +53,7 @@ export default function useApplicationData () {
         url,
         data
       )
-      // uncomment these lines if you want to run the tests in jest
+      // uncomment the lines below if you want to run the tests in jest
       // .then(response => {
       //   dispatch({ type: SET_INTERVIEW, id, interview });
       // })
@@ -68,7 +68,7 @@ export default function useApplicationData () {
         url,
         data
       )
-      // uncomment these lines if you want to run the tests in jest
+      // uncomment the lines below if you want to run the tests in jest
       // .then(response => {
       //   dispatch({ type: SET_INTERVIEW, id, interview: data });
       // })
