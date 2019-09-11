@@ -16,14 +16,16 @@ export default function useApplicationData () {
   });
   
   useEffect(() => {
-    const ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+    // Uncomment the ws lines if you want the websockets to work
+    // The .then() in bookInterview and cancelInterview functions below must also be commented out
+    // const ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 
-    ws.onmessage = (event) => {
-      let eventData = JSON.parse(event.data);
-      if (eventData.type === SET_INTERVIEW) {
-        dispatch({type: SET_INTERVIEW, id: eventData.id, interview: eventData.interview});
-      }
-    }
+    // ws.onmessage = (event) => {
+    //   let eventData = JSON.parse(event.data);
+    //   if (eventData.type === SET_INTERVIEW) {
+    //     dispatch({type: SET_INTERVIEW, id: eventData.id, interview: eventData.interview});
+    //   }
+    // }
 
     const daysApi = axios.get("/api/days");
     const appointmentsApi = axios.get("/api/appointments");
@@ -53,10 +55,10 @@ export default function useApplicationData () {
         url,
         data
       )
-      // uncomment the lines below if you want to run the tests in jest
-      // .then(response => {
-      //   dispatch({ type: SET_INTERVIEW, id, interview });
-      // })
+      // comment the lines below if you want to test the webSockets
+      .then(response => {
+        dispatch({ type: SET_INTERVIEW, id, interview });
+      })
     );
   };
 
@@ -68,10 +70,10 @@ export default function useApplicationData () {
         url,
         data
       )
-      // uncomment the lines below if you want to run the tests in jest
-      // .then(response => {
-      //   dispatch({ type: SET_INTERVIEW, id, interview: data });
-      // })
+      // comment the lines below if you want to test the webSockets
+      .then(response => {
+        dispatch({ type: SET_INTERVIEW, id, interview: data });
+      })
     );
   };
 
