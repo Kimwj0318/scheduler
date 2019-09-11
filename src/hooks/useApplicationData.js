@@ -17,7 +17,7 @@ export default function useApplicationData () {
   
   useEffect(() => {
     // Uncomment the ws lines if you want the websockets to work
-    The .then() in bookInterview and cancelInterview functions below must also be commented out
+    // The .then() in bookInterview and cancelInterview functions below must also be commented out
     const ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 
     ws.onmessage = (event) => {
