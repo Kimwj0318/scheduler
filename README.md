@@ -2,6 +2,17 @@
 A single page web application that allows users to book interviews between Monday and Friday
 
 # Final Product
+ - Homepage
+  !["Homepage"](https://github.com/Kimwj0318/scheduler/blob/master/public/docs/Loading%20Page.png)
+ 
+ - Changing Day
+  !["Changing-Day"](https://github.com/Kimwj0318/scheduler/blob/master/public/docs/Changing%20Day.png)
+
+ - Adding Interview
+  !["Adding-Interview"](https://github.com/Kimwj0318/scheduler/blob/master/public/docs/Adding%20an%20Interview.png)
+
+ - Deleting Interview
+  !["Deleting-Interview"](https://github.com/Kimwj0318/scheduler/blob/master/public/docs/Deleting%20Interview.png)
 
 # Dependencies
   - axios
