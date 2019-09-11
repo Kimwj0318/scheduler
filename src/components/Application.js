@@ -2,8 +2,8 @@ import React from "react";
 import "components/Application.scss";
 import DayList from "components/DayList.js";
 import Appointment from "components/appointment/Index.js";
-import { getAppointmentsForDay, getInterview, getInterviewersByDay } from "../helpers/selectors.js";
 import useApplicationData from "../hooks/useApplicationData";
+import { getAppointmentsForDay, getInterview, getInterviewersByDay } from "../helpers/selectors.js";
 
 export default function Application(props) {
   const {

@@ -1,4 +1,4 @@
-const getAppointmentsForDay = function(state, day) {
+export const getAppointmentsForDay = function(state, day) {
   let matchedAppointments = [];
   let foundAppointments = [];
   const filteredDays = state.days.filter(eachDay => eachDay.name === day);
@@ -15,7 +15,7 @@ const getAppointmentsForDay = function(state, day) {
   return matchedAppointments;
 };
 
-const getInterview = function(state, interview) {
+export const getInterview = function(state, interview) {
   if (interview) {
     return {
       student: interview.student,
@@ -25,7 +25,7 @@ const getInterview = function(state, interview) {
   return null;
 }
 
-const getInterviewersByDay = function(state, day) {
+export const getInterviewersByDay = function(state, day) {
   let matchedInterviewers = [];
   let foundInterviewers = [];
   const filteredDays = state.days.filter(eachDay => eachDay.name === day);
@@ -41,4 +41,3 @@ const getInterviewersByDay = function(state, day) {
 
   return matchedInterviewers;
 }
-module.exports = { getAppointmentsForDay, getInterview, getInterviewersByDay }
