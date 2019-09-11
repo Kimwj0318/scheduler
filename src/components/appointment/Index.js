@@ -34,12 +34,14 @@ export default function Appointment(props) {
     }
   }, [props.interview, transition, mode])
 
-  const deleteInterview = function(e) {
+  const deleteInterview = function() {
+    console.log(props.interviewer);
     transition(DELETING);
     props.cancelInterview(props.id)
     .then(()=> transition(EMPTY))
     .catch(error => transition(ERROR_DELETE, true))
   }
+  
   const save = function (name, interviewer) {
     const interview = {
       student: name,
@@ -74,6 +76,7 @@ export default function Appointment(props) {
       {mode === CREATE && (
         <Form
           interviewers={props.interviewers}
+          interviewer={props.interviewer}
           onSave={save}
           onCancel={() => back()}
         />

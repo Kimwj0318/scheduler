@@ -25,9 +25,9 @@ export default function Application(props) {
       interviewers={interviewers}
       bookInterview={bookInterview}
       cancelInterview={cancelInterview}
+      interviewer={interviewers[0].id}
       />
   });
-
 
   return (
     <main className="layout">
@@ -52,7 +52,6 @@ export default function Application(props) {
         />
       </section>
       <section className="interviewers">
-        <h4 className="interviewers__header text--light"></h4>
         <ul className="interviewers__list"></ul>
       </section>
       <section className="schedule">
